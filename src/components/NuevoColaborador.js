@@ -1,4 +1,26 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { crearNuevoColaboradorAction } from "../actions/colaboradorActions";
+
 const NuevoColaborador = () => {
+  const [nombre, setNombre] = useState("");
+  const [rut, setRut] = useState("");
+
+  const dispatch = useDispatch();
+
+  const agregarColaborador = (colaborador) =>
+    dispatch(crearNuevoColaboradorAction(colaborador));
+
+  const submitNuevoColaborador = (e) => {
+    e.preventDefault();
+
+    agregarColaborador({
+      nombre,
+      rut,
+    });
+  };
+
   return (
     <div className="row justify-content-center">
       <div className="col-md-8">
@@ -7,7 +29,7 @@ const NuevoColaborador = () => {
             <h2 className="text-centar mb-4 font-weight-bold">
               Agregar Nuevo Colaborador
             </h2>
-            <form>
+            <form onSubmit={submitNuevoColaborador}>
               <div className="form-group">
                 <label> Nombre Colaborador</label>
                 <input
@@ -15,6 +37,17 @@ const NuevoColaborador = () => {
                   className="form-control"
                   placeholder="nombre colaborador"
                   name="nombre"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                />
+                <label> Rut Colaborador</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="rut colaborador"
+                  name="rut"
+                  value={rut}
+                  onChange={(e) => setRut(e.target.value)}
                 />
               </div>
               <button
