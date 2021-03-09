@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 
 import { crearNuevoColaboradorAction } from "../actions/colaboradorActions";
 
@@ -8,6 +8,10 @@ const NuevoColaborador = () => {
   const [rut, setRut] = useState("");
 
   const dispatch = useDispatch();
+
+  const cargando = useSelector( state => state.colaboradores.loading);
+
+  console.log(cargando);
 
   const agregarColaborador = (colaborador) =>
     dispatch(crearNuevoColaboradorAction(colaborador));

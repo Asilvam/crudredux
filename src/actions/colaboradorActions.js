@@ -1,14 +1,16 @@
-import colaboradoresReducer from "../reducers/colaboradoresReducer";
 import {
   AGREGAR_COLABORADOR,
   AGREGAR_COLABORADOR_EXITO,
   AGREGAR_COLABORADOR_ERROR,
 } from "../types";
 
+import clienteAxios from '../config/axios';
+
 export function crearNuevoColaboradorAction(colaborador) {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(agregarColaborador());
     try {
+      await clienteAxios.post('/api/colaboradores', colaborador);
       dispatch(agregarColaboradorExito(colaborador));
     } catch (error) {
       dispatch(agregarColaboradorError(true));
@@ -18,6 +20,7 @@ export function crearNuevoColaboradorAction(colaborador) {
 
 const agregarColaborador = () => ({
   type: AGREGAR_COLABORADOR,
+  payload:true
 });
 
 const agregarColaboradorExito = colaborador =>({
@@ -25,8 +28,8 @@ const agregarColaboradorExito = colaborador =>({
     payload: colaborador
 })
 
-const agregarColaboradorError = ()=>({
+const agregarColaboradorError = estado=>({
     type: AGREGAR_COLABORADOR_ERROR,
-   
+    payload: estado
 
 })
