@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { crearNuevoColaboradorAction } from "../actions/colaboradorActions";
 
-const NuevoColaborador = () => {
+const NuevoColaborador = ({history}) => {
   const [nombre, setNombre] = useState("");
   const [rut, setRut] = useState("");
 
   const dispatch = useDispatch();
 
-  const cargando = useSelector( state => state.colaboradores.loading);
+  const cargando = useSelector((state) => state.colaboradores.loading);
+  const error = useSelector(state=> state.colaboradores.error);
 
   console.log(cargando);
 
@@ -23,6 +24,7 @@ const NuevoColaborador = () => {
       nombre,
       rut,
     });
+    history.push('/');
   };
 
   return (
@@ -61,6 +63,9 @@ const NuevoColaborador = () => {
                 Agregar
               </button>
             </form>
+            {cargando ? <p>Cargando...</p> : null}
+
+            {error ? <p className="alert alert-danger p2 mt-4 text-center">Hubo un error</p> : null}
           </div>
         </div>
       </div>

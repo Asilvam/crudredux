@@ -5,6 +5,7 @@ import {
 } from "../types";
 
 import clienteAxios from '../config/axios';
+import Swal from 'sweetalert2';
 
 export function crearNuevoColaboradorAction(colaborador) {
   return async (dispatch) => {
@@ -12,8 +13,18 @@ export function crearNuevoColaboradorAction(colaborador) {
     try {
       await clienteAxios.post('/api/colaboradores', colaborador);
       dispatch(agregarColaboradorExito(colaborador));
+      Swal.fire(
+        'Correcto',
+        'Los datos se agregaron correctamente',
+        'success'
+      )
     } catch (error) {
       dispatch(agregarColaboradorError(true));
+      Swal.fire({
+        icon:'error',
+        title:'error',
+        text:'Hubo un eror, intenta de nuevo'
+      })
     }
   };
 }
